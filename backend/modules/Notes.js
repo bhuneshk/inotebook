@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const {Schema}=mongoose;
 const NotesSchema = new Schema({
     title:{
         type: String,
@@ -18,4 +19,4 @@ const NotesSchema = new Schema({
     }
 })
 
-model.exports = mongoose.model('notes',NotesSchema);
+module.exports = mongoose.model('notes',NotesSchema);

@@ -1,12 +1,16 @@
 const express= require('express');
 const router = express.Router();
+const User= require('../modules/User');
+const {body,validationResult} = require('express-validator');
+router.post('/',[body('name').isLength({min:3}),body('email').isEmail(),body('password').isLength({min:3})],(req,res)=>{
+    const result = validationResult(req);
+     if (result.isEmpty()) {
+    const user=User(req.body);
+    user.save();
+    return res.send(req.body);
+  }
 
-router.get('/',(req,res)=>{
-    const obj={
-        'name' : 'bhunesh',
-        'roll no': '19001011016'
-    }
-    res.json(obj);
+  res.send({ errors: result.array() });
 })
 
 module.exports=router;
