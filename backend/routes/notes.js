@@ -50,4 +50,19 @@ router.put('/updatenote/:id',fetchuser, async (req,res)=>{
     res.send(note);
 })
 
+router.delete('/deletenote/:id',fetchuser, async (req,res)=>{
+    
+    let note = await Notes.findById(req.params.id);
+    if(!note){
+        return res.status(404).send("Not Found");
+    }
+
+    if(note.user.toString()!= req.user.id){
+        return res.status(401).send("Not Allowed");
+    }
+    
+    await Notes.findByIdAndDelete(req.params.id)
+    res.send('Deleted');
+})
+
 module.exports=router;
