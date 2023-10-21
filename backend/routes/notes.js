@@ -24,4 +24,30 @@ router.get('/addnote',fetchuser,[body('title').isLength({min:3}),body('descripti
     res.send(savedNote);
 })
 
+router.put('/updatenote/:id',fetchuser, async (req,res)=>{
+    
+    let note = await Notes.findById(req.params.id);
+    if(!note){
+        return res.status(404).send("Not Found");
+    }
+
+    if(note.user.toString()!= req.user.id){
+        return res.status(401).send("Not Allowed");
+    }
+    const {title, description, tag} = req.body;
+    const newNote={};
+    if(title){
+        newNote.title=title;
+    }
+    if(description){
+        newNote.description=description;
+    }
+    if(tag){
+        newNote.tag=tag;
+    }
+    
+    note = await Notes.findByIdAndUpdate(req.params.id,{$set : newNote},{new:true})
+    res.send(note);
+})
+
 module.exports=router;
