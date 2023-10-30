@@ -1,0 +1,14 @@
+import React from 'react'
+
+const Noteitem = (props) => {
+    return (
+        <div className="card col-md-3 mx-4 my-2" >
+                <div className="card-body">
+                    <h5 className="card-title">{props.note.title}</h5>
+                    <p className="card-text">{props.note.description}</p>
+                </div>
+        </div>
+    )
+}
+
+export default Noteitem
