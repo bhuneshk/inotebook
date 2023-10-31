@@ -8,13 +8,20 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Alert from './components/Alert';
+import { useState } from 'react';
 
 function App() {
+  const [alert,setAlert]=useState(null);
+  setTimeout(() => {
+    setAlert(null);
+  }, 2000);
   return (
     <>
       <NoteState>
         <BrowserRouter>
           <Navbar />
+          <Alert alert={alert}/>
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home />} />
