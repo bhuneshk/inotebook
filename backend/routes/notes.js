@@ -14,7 +14,7 @@ router.get('/fetchallnotes',fetchuser, async (req,res)=>{
     }
 })
 
-router.get('/addnote',fetchuser,[body('title').isLength({min:3}),body('description').isLength({min: 5})], async (req,res)=>{
+router.post('/addnote',fetchuser,[body('title').isLength({min:3}),body('description').isLength({min: 5})], async (req,res)=>{
     const {title, description, tag} = req.body;
     try {
         

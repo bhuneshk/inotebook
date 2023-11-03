@@ -38,20 +38,22 @@ router.post('/createuser', [body('name', 'Enter Valid Username').isLength({ min:
 })
 
 router.post('/login', [body('email', 'Enter Valid Email').isEmail(), body('password', 'Password cannot be empty').exists()], async (req, res) => {
+    let success=true;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()});
+        success=false;
+        return res.status(400).json({success:false,errors: errors.array()});
     }
     const {email,password}=req.body;
     try{
         let user=await User.findOne({email});
         if(!user){
-            return res.status(400).json({error: "Please enter the valid credentials"});
+            return res.status(400).json({success:false,error: "Please enter the valid credentials"});
         }
         
         const passwordCompare=await bcrypt.compare(password,user.password);
         if(!passwordCompare){
-            return res.status(400).json({error: "Please enter the valid credentials"});
+            return res.status(400).json({success:false,error: "Please enter the valid credentials"});
         }
 
         const data={
@@ -61,7 +63,7 @@ router.post('/login', [body('email', 'Enter Valid Email').isEmail(), body('passw
         }
         const authtoken= jwt.sign(data,JWT_SECRET);
 
-        res.json({authtoken});
+        res.json({success,authtoken});
     }catch(error){
         console.log(error);
         res.status(500).send("Internal server error")

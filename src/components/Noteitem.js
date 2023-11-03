@@ -11,7 +11,7 @@ const Noteitem = (props) => {
                     <p className="card-text">{props.note.description}</p>
                     <hr />
                     <i className="fa-solid fa-trash mx-2" onClick={()=>{deleteNote(props.note._id)}}></i>
-                    <i className="fa-regular fa-pen-to-square mx-2" ></i>
+                    <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{props.updateNote(props.note)}} ></i>
                 </div>
         </div>
     )
