@@ -15,21 +15,27 @@ import { useState } from 'react';
 
 function App() {
   const [alert,setAlert]=useState(null);
-  setTimeout(() => {
-    setAlert(null);
-  }, 2000);
+  const showAlert=(message,type)=>{
+    setAlert({
+        msg: message,
+        type: type
+      })
+      const mytimeout=setTimeout(() => {
+        setAlert(null);
+      }, 2000)
+  };
   return (
     <>
-      <NoteState>
+      <NoteState alert={alert} showAlert={showAlert}>
         <BrowserRouter>
           <Navbar />
           <Alert alert={alert}/>
           <div className="container">
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/" element={<Home showAlert={showAlert}/>} />
               <Route exact path="/about" element={<About />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/signup" element={<Signup />} />
+              <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
+              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
             </Routes>
           </div>
         </BrowserRouter>

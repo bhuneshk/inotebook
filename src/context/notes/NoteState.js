@@ -40,6 +40,7 @@ const NoteState = (props) => {
             
         })
         const newNotes = notes.filter((note) => { return note._id !== id });
+        props.showAlert('Deleted Successfully','success');
         setNotes(newNotes);
     }
 
