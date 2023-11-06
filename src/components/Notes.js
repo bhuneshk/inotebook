@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import NoteContext from '../context/notes/NoteContext';
 import Noteitem from './Noteitem';
 import AddNote from './AddNote';
+import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
+    let history=useNavigate();
     const [note,setNote]=useState({title:"", description:"", tag:""});
     const context = useContext(NoteContext);
     const { notes, fetchNotes,editNote } = context;
@@ -24,6 +26,12 @@ const Notes = (props) => {
     const onChange=(e)=>{
         setNote({...note,[e.target.name]: e.target.value});
     }
+    useEffect(() => {
+         if(!sessionStorage.getItem('token')){
+            history('/login')
+         }
+    }, [])
+    
     return (
         <>
             <AddNote showAlert={props.showAlert}/>

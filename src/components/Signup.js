@@ -16,7 +16,7 @@ const Signup = (props) => {
       const json =  await response.json();
       console.log(json);
       if(json.success){
-          localStorage.setItem('token',json.authtoken);
+          sessionStorage.setItem('token',json.authtoken);
           props.showAlert("Registered Successfully","success")
           history('/');
       }
